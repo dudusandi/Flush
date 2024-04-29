@@ -112,6 +112,7 @@ class AjustesState extends State<Ajustes> {
                 padding: const EdgeInsets.only(top: 20),
                 child: TextField(
                   controller: _portaController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: "Porta",
                     floatingLabelBehavior: FloatingLabelBehavior.always,

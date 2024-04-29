@@ -16,38 +16,66 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalhes'),
+        title: Text('Detalhes'),foregroundColor: Colors.white,
+        backgroundColor: const Color(0xff004c9e),
+
+        actions: [
+          IconButton(onPressed: () async {
+            await banco.conectarbanco();
+            await banco.removerPesquisador(data['nome']);
+            Navigator.pop(context);
+          }, icon: const Icon(Icons.delete))
+        ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Nome: ${data["nome"]}',
-              style: TextStyle(fontSize: 24),
-            ),
-            Text(
-              'Cargo: ${data["areaConhecimento"]}',
-              style: TextStyle(fontSize: 24),
-            ),
-            Text(
-              'Formação: ${data["tipoConhecimento"]}',
-              style: TextStyle(fontSize: 24),
-            ),
-            Text(
-              'CPF: ${data["cpf"]}',
-              style: TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                await banco.conectarbanco();
-                await banco.removerPesquisador(data['nome']);
-                Navigator.pop(context);
-              },
-              child: const Text('Remover'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(top:20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.indigo.shade100),borderRadius: BorderRadius.circular(20),color: Colors.grey.shade100),
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  'Nome: ${data["nome"]}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.indigo.shade100),borderRadius: BorderRadius.circular(20),color: Colors.grey.shade100),
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  'Cargo: ${data["areaConhecimento"]}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.indigo.shade100),borderRadius: BorderRadius.circular(20),color: Colors.grey.shade100),
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  'Formação: ${data["tipoConhecimento"]}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(border: Border.all(color: Colors.indigo.shade100),borderRadius: BorderRadius.circular(20),color: Colors.grey.shade100),
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  'CPF: ${data["cpf"]}',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:imcflutter/DadosPesquisador.dart';
 import 'package:postgres/postgres.dart';
 import 'package:imcflutter/BancoDados.dart';
-import 'CadastrarPesquisador.dart';
+
 
 class PesquisadoresListScreen extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
       _isLoading = true;
     });
 
-    final results = await conn.execute(
+     final results = await conn.execute(
       Sql.named('SELECT * FROM pesquisadores ORDER BY nome'),
     );
 
