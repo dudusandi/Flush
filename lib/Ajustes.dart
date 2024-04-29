@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:imcflutter/navBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BancoDados.dart';
+import 'navBar.dart';
 
 class Ajustes extends StatefulWidget {
   
@@ -28,9 +28,11 @@ class AjustesState extends State<Ajustes> {
   ];
 
   final TextEditingController _hostController = TextEditingController();
+  final TextEditingController _portaController = TextEditingController();
   final TextEditingController _databaseController = TextEditingController();
   final TextEditingController _usuarioController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
+
 
   bool passwordVisible=true;
 
@@ -42,7 +44,6 @@ class AjustesState extends State<Ajustes> {
 
     super.initState();
     carregarConfiguracoes();
-
   }
 
   @override
@@ -50,17 +51,30 @@ class AjustesState extends State<Ajustes> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {
-            salvarConfiguracoes();
-            banco.criarbanco();
+          IconButton(onPressed: () async {
+            await salvarConfiguracoes();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Inicio()),
-                  (Route<dynamic> route) => false,
-            );
-
-
+                  (Route<dynamic> route) => false,);
+            try {
+              await banco.criarbanco();
+              if(mounted){
+            setState(() {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Banco Criado")),
+              );
+            });
+    }
+            } catch (e) {
+              setState(() {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(e.toString())),
+                );
+              });
+            }
           },
+
               icon: const Icon(Icons.save))
         ],
         title: const Text('Ajustes'),
@@ -94,6 +108,23 @@ class AjustesState extends State<Ajustes> {
                     filled: true,
                     fillColor: Colors.grey.shade200,
                     prefixIcon: const Icon(Icons.computer),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextField(
+                  controller: _portaController,
+                  decoration: InputDecoration(
+                    labelText: "Porta",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey.shade200,
+                    prefixIcon: const Icon(Icons.people),
                   ),
                 ),
               ),
@@ -193,11 +224,12 @@ class AjustesState extends State<Ajustes> {
     );
   }
 
-  void carregarConfiguracoes() async {
+  Future carregarConfiguracoes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
 
       _hostController.text = prefs.getString('host') ?? '';
+      _portaController.text = prefs.getString('porta') ?? '';
       _databaseController.text = prefs.getString('database') ?? '';
       _usuarioController.text = prefs.getString('usuario') ?? '';
       _senhaController.text = prefs.getString('senha') ?? '';
@@ -206,9 +238,10 @@ class AjustesState extends State<Ajustes> {
     });
   }
 
-  void salvarConfiguracoes() async {
+  Future salvarConfiguracoes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('host', _hostController.text);
+    await prefs.setString('porta', _portaController.text);
     await prefs.setString('database', _databaseController.text);
     await prefs.setString('usuario', _usuarioController.text);
     await prefs.setString('senha', _senhaController.text);

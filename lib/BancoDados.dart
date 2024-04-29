@@ -50,11 +50,28 @@ class Banco{
     _ssl = value;
   }
 
+  var _port;
+
+  get port => _port;
+
+  set port(value) {
+    _port = value;
+  }
+
+  var _portaController;
+
+  get portaController => _portaController;
+
+  set portaController(value) {
+    _portaController = value;
+  }
+
   Future<Connection> conectarbanco() async {
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       _host = prefs.getString('host') ?? '';
+      _portaController = prefs.getString('porta') ?? '';
       _database = prefs.getString('database') ?? '';
       _usuario = prefs.getString('usuario') ?? '';
       _senha = prefs.getString('senha') ?? '';
@@ -65,23 +82,29 @@ class Banco{
       }
 
 
-      final conn = await Connection.open(Endpoint(
+      try {
+        final conn = await Connection.open(Endpoint(
 
-        host: _host,
-        database: _database,
-        username: _usuario,
-        password: _senha,
+            host: _host,
+            database: _database,
+            username: _usuario,
+            password: _senha,
+            port: int.parse(_portaController)
 
-      ),
+        ),
 
-        settings: ConnectionSettings(sslMode: sslMode()),
-      );
+          settings: ConnectionSettings(sslMode: sslMode()),
+        );
 
-      return conn;
+        return conn;
+      }catch (e){
+        return Future.error(e);
 
+      }
   }
 
   Future<void> criarbanco() async {
+
       Connection conn = await conectarbanco();
 
       await conn.execute(

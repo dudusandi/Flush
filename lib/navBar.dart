@@ -65,8 +65,7 @@ class _InicioState extends State<Inicio> {
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () async {
-            Navigator.pushNamed(context, '/ajustes');
-
+            await Navigator.pushNamed(context, '/ajustes');
 
           }, icon: const Icon(Icons.settings), color: Colors.white,)
         ],
