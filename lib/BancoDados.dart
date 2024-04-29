@@ -135,4 +135,16 @@ class Banco{
     await conn.close();
   }
 
+
+  Future<void> removerPesquisador(String nome) async {
+    Connection conn = await conectarbanco();
+
+    await conn.execute('''
+      DELETE FROM pesquisadores 
+      WHERE nome = '$nome'
+      '''
+    );
+    await conn.close();
+  }
+
 }

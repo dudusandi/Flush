@@ -23,8 +23,6 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
     atualizarListaPesquisadores();
   }
 
-
-
   Future<void> atualizarListaPesquisadores() async {
 
     banco.conectarbanco();
@@ -43,6 +41,8 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
       var pesquisador = {
         'nome': row[0],
         'areaConhecimento': row[2],
+        'tipoConhecimento': row[3],
+        'cpf': row[1]
       };
       pesquisadores.add(pesquisador);
     }
@@ -88,15 +88,7 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
             onTap: () async {
               await Navigator.push(context, MaterialPageRoute(
                   builder: (context) => DadosPesquisador(),settings: RouteSettings(
-                  arguments: pesquisadores[index]))).then((value) {
-                    setState(() {Future.delayed(Duration(milliseconds: 300), () {
-                      atualizarListaPesquisadores();
-                    },
-                    );
-                    },
-                    );
-                  },
-                  );
+                  arguments: pesquisadores[index])));
             },
           );
         },

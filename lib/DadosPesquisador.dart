@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
 import 'BancoDados.dart';
 
 class DadosPesquisador extends StatefulWidget {
@@ -15,17 +14,6 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
     Banco banco = Banco();
 
 
-    Future<void> removerPesquisador(String nome) async {
-      Connection conn = await banco.conectarbanco();
-
-      await conn.execute('''
-      DELETE FROM pesquisadores 
-      WHERE nome = '$nome'
-      '''
-      );
-      await conn.close();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Detalhes'),
@@ -39,14 +27,22 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
               style: TextStyle(fontSize: 24),
             ),
             Text(
-              'Área: ${data["areaConhecimento"]}',
+              'Cargo: ${data["areaConhecimento"]}',
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              'Formação: ${data["tipoConhecimento"]}',
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              'CPF: ${data["cpf"]}',
               style: TextStyle(fontSize: 24),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 await banco.conectarbanco();
-                await removerPesquisador(data['nome']);
+                await banco.removerPesquisador(data['nome']);
                 Navigator.pop(context);
               },
               child: const Text('Remover'),
