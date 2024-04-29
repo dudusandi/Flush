@@ -53,19 +53,13 @@ class AjustesState extends State<Ajustes> {
         actions: [
           IconButton(onPressed: () async {
             await salvarConfiguracoes();
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Inicio()),
-                  (Route<dynamic> route) => false,);
             try {
               await banco.criarbanco();
-              if(mounted){
-            setState(() {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Banco Criado")),
-              );
-            });
-    }
+              setState(() {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Conectado ao Banco!")),
+                );
+              });
             } catch (e) {
               setState(() {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -73,8 +67,11 @@ class AjustesState extends State<Ajustes> {
                 );
               });
             }
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Inicio()),
+                  (Route<dynamic> route) => false,);
           },
-
               icon: const Icon(Icons.save))
         ],
         title: const Text('Ajustes'),

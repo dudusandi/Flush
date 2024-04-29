@@ -118,7 +118,6 @@ class Banco{
 )
      '''
       );
-      print("Banco Criado");
       await conn.close();
 
   }
