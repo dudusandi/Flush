@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/cadastro': (context) => CadastroPesquisador(),
         '/cadastro_projeto': (context) => CadastroProjeto(),
         '/ajustes': (context) => Ajustes(),
+        '/listapesquisadores': (context) => PesquisadoresListScreen()
       },
     );
   }

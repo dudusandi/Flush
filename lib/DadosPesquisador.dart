@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:imcflutter/ListarPesquisadores.dart';
 import 'BancoDados.dart';
 
 class DadosPesquisador extends StatefulWidget {
+
+
   @override
   State<DadosPesquisador> createState() => _DadosPesquisadorState();
 }
 
 class _DadosPesquisadorState extends State<DadosPesquisador> {
+
+
+
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> data =
@@ -23,7 +29,7 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
           IconButton(
               onPressed: () async {
                 await banco.removerPesquisador(data['nome']);
-                Navigator.pop(context);
+                Navigator.pop(context,true);
               },
               icon: const Icon(Icons.delete))
         ],

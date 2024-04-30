@@ -12,7 +12,6 @@ class Banco {
   var _portaController;
 
   get host => _host;
-
   set host(value) {
     _host = value;
   }

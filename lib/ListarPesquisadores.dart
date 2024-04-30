@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imcflutter/CadastrarPesquisador.dart';
 import 'package:imcflutter/DadosPesquisador.dart';
 import 'package:postgres/postgres.dart';
 import 'package:imcflutter/BancoDados.dart';
@@ -11,6 +12,8 @@ class PesquisadoresListScreen extends StatefulWidget {
 class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   Banco banco = Banco();
 
+
+
   List<Map<String, dynamic>> pesquisadores = [];
 
   bool _isLoading = true;
@@ -22,7 +25,6 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   }
 
   Future<void> atualizarListaPesquisadores() async {
-    banco.conectarbanco();
     Connection conn = await banco.conectarbanco();
 
     setState(() {
@@ -64,21 +66,16 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
           ),
           IconButton(
             onPressed: () async {
-              Navigator.pushNamed(context, '/cadastro')
-                  .then((value) => setState(() {
-                        Future.delayed(const Duration(milliseconds: 300), () {
-                          setState(() {
-                            atualizarListaPesquisadores();
-                          });
-                        });
-                      }));
+              Navigator.pushNamed(context, '/cadastro').then((value) => setState(() {
+                value == true ? atualizarListaPesquisadores() : null;
+              }),);
             },
             icon: Icon(Icons.add),
           ),
         ],
       ),
       body: _isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
@@ -93,7 +90,11 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                         MaterialPageRoute(
                             builder: (context) => DadosPesquisador(),
                             settings: RouteSettings(
-                                arguments: pesquisadores[index])));
+                                arguments: pesquisadores[index]))).then((value) => setState(() {
+                                  if(value == true) {
+                                    atualizarListaPesquisadores();
+                                  }
+                                }),);
                   },
                 );
               },

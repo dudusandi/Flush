@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class ProjetosListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,10 +12,7 @@ class ProjetosListScreen extends StatelessWidget {
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {
-
-
-            },
+            onPressed: () {},
             icon: Icon(Icons.add),
           ),
         ],

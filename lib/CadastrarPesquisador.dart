@@ -54,7 +54,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                     SnackBar(
                         content: Text('Pesquisador cadastrado com sucesso!')),
                   );
-                  Navigator.pop(context);
+                  Navigator.pop(context, true);
                 },
                 icon: Icon(Icons.save))
           ]),
@@ -66,8 +66,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
             TextFormField(
               controller: _nomeController,
               decoration: InputDecoration(
-                border:
-                OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -75,7 +74,6 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 fillColor: Colors.grey.shade200,
                 labelText: 'Nome',
               ),
-
             ),
             SizedBox(height: 20.0),
             TextFormField(
@@ -83,8 +81,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
               keyboardType: TextInputType.number,
               inputFormatters: [maskFormatter],
               decoration: InputDecoration(
-
-                border:OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -153,7 +150,6 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
               ),
             ),
             SizedBox(height: 16.0),
-
           ],
         ),
       ),
