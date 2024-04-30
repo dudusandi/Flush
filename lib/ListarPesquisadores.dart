@@ -3,14 +3,12 @@ import 'package:imcflutter/DadosPesquisador.dart';
 import 'package:postgres/postgres.dart';
 import 'package:imcflutter/BancoDados.dart';
 
-
 class PesquisadoresListScreen extends StatefulWidget {
   @override
   PesquisadoresListScreenState createState() => PesquisadoresListScreenState();
 }
 
 class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
-
   Banco banco = Banco();
 
   List<Map<String, dynamic>> pesquisadores = [];
@@ -18,13 +16,12 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   bool _isLoading = true;
 
   @override
-  void initState()   {
+  void initState() {
     super.initState();
     atualizarListaPesquisadores();
   }
 
   Future<void> atualizarListaPesquisadores() async {
-
     banco.conectarbanco();
     Connection conn = await banco.conectarbanco();
 
@@ -33,7 +30,7 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
       _isLoading = true;
     });
 
-     final results = await conn.execute(
+    final results = await conn.execute(
       Sql.named('SELECT * FROM pesquisadores ORDER BY nome'),
     );
 
@@ -60,39 +57,47 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
         title: Text('Pesquisadores'),
         actions: [
           IconButton(
-            onPressed: () {atualizarListaPesquisadores();},
+            onPressed: () {
+              atualizarListaPesquisadores();
+            },
             icon: Icon(Icons.refresh),
           ),
           IconButton(
             onPressed: () async {
-              Navigator.pushNamed(context, '/cadastro').then((value) => setState(() {
-                Future.delayed(Duration(milliseconds: 300), () {
-                  atualizarListaPesquisadores();
-                });
-              }));
+              Navigator.pushNamed(context, '/cadastro')
+                  .then((value) => setState(() {
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          setState(() {
+                            atualizarListaPesquisadores();
+                          });
+                        });
+                      }));
             },
             icon: Icon(Icons.add),
           ),
         ],
       ),
-      body: _isLoading ?
-      Center(
-        child: CircularProgressIndicator(),
-      ) :
-      ListView.builder(
-        itemCount: pesquisadores.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(pesquisadores[index]['nome']),
-            subtitle: Text(pesquisadores[index]['areaConhecimento']),
-            onTap: () async {
-              await Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => DadosPesquisador(),settings: RouteSettings(
-                  arguments: pesquisadores[index])));
-            },
-          );
-        },
-      ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: pesquisadores.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(pesquisadores[index]['nome']),
+                  subtitle: Text(pesquisadores[index]['areaConhecimento']),
+                  onTap: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DadosPesquisador(),
+                            settings: RouteSettings(
+                                arguments: pesquisadores[index])));
+                  },
+                );
+              },
+            ),
     );
   }
 }
