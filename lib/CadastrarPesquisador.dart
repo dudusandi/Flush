@@ -59,12 +59,15 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 icon: Icon(Icons.save))
           ]),
       body: Padding(
-        padding: EdgeInsets.all(25.0),
+        padding: EdgeInsets.all(15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 15),
             TextFormField(
               controller: _nomeController,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
@@ -75,7 +78,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'Nome',
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 30.0),
             TextFormField(
               controller: _cpfController,
               keyboardType: TextInputType.number,
@@ -90,7 +93,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'CPF',
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 30.0),
             DropdownButtonFormField<String>(
               value: _tipoSelecionado,
               borderRadius: BorderRadius.circular(20),
@@ -117,7 +120,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'Cargo',
               ),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 30.0),
             DropdownButtonFormField<String>(
               value: _areaSelecionada,
               borderRadius: BorderRadius.circular(20),
@@ -149,7 +152,6 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'Formação',
               ),
             ),
-            SizedBox(height: 16.0),
           ],
         ),
       ),

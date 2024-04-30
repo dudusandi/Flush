@@ -102,28 +102,20 @@ class AjustesState extends State<Ajustes> {
             children: [
               const Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "Servidor SQL:",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextField(
-                  keyboardType: TextInputType.url,
-                  autocorrect: false,
-                  controller: _hostController,
-                  decoration: InputDecoration(
-                    labelText: "Host",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    prefixIcon: const Icon(Icons.computer),
+              TextField(
+                keyboardType: TextInputType.url,
+                autocorrect: false,
+                controller: _hostController,
+                decoration: InputDecoration(
+                  labelText: "Host",
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
                   ),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  prefixIcon: const Icon(Icons.computer),
                 ),
               ),
               Padding(

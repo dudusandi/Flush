@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:imcflutter/ListarPesquisadores.dart';
 import 'BancoDados.dart';
 
 class DadosPesquisador extends StatefulWidget {
-
+  const DadosPesquisador({super.key});
 
   @override
   State<DadosPesquisador> createState() => _DadosPesquisadorState();
 }
 
 class _DadosPesquisadorState extends State<DadosPesquisador> {
-
-
-
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> data =
@@ -22,79 +18,109 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalhes'),
+        title: const Text('Detalhes'),
         foregroundColor: Colors.white,
         backgroundColor: const Color(0xff004c9e),
         actions: [
           IconButton(
               onPressed: () async {
                 await banco.removerPesquisador(data['nome']);
-                Navigator.pop(context,true);
+                Navigator.pop(context, true);
               },
               icon: const Icon(Icons.delete))
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.indigo.shade100),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade100),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(15),
-                width: double.infinity,
-                child: Text(
-                  'Nome: ${data["nome"]}',
-                  style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 5),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Nome:',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
+
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.indigo.shade100),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade100),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(15),
-                width: double.infinity,
-                child: Text(
-                  'Cargo: ${data["areaConhecimento"]}',
-                  style: TextStyle(fontSize: 20),
+
+                Text(
+                  data["nome"],
+                  style: const TextStyle(
+
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.indigo.shade100),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade100),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(15),
-                width: double.infinity,
-                child: Text(
-                  'Formação: ${data["tipoConhecimento"]}',
-                  style: TextStyle(fontSize: 20),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Cargo:',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.indigo.shade100),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade100),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(15),
-                width: double.infinity,
-                child: Text(
-                  'CPF: ${data["cpf"]}',
-                  style: TextStyle(fontSize: 20),
+                const SizedBox(height: 5),
+                Text(
+                  data["areaConhecimento"],
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-            ],
-          ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Formação:',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  data["tipoConhecimento"],
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'CPF:',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  data["cpf"],
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+          ],
         ),
       ),
     );
