@@ -19,13 +19,13 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   List<String> _selectedResearcherIds = [];
 
   Future<void> _dataInicial(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: dataInicial,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (picked != null && picked != dataInicial) {
+    if (picked != null) {
       setState(() {
         dataInicial = picked;
       });
@@ -70,6 +70,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
         title: Text('Cadastrar Projeto'),
         foregroundColor: Colors.white,
         backgroundColor: const Color(0xff004c9e),
@@ -107,6 +108,30 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
               ),
               maxLines: 2,
             ),
+            SizedBox(
+              height: 20,
+            ),
+            MultiSelectDialogField(
+              dialogHeight: 200,
+              backgroundColor: Colors.grey.shade200,
+              decoration: BoxDecoration(
+                  border: null,
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.grey.shade200),
+              searchable: true,
+              items: _pesquisadores
+                  .map((pesquisador) => MultiSelectItem<String>(
+                      pesquisador['nome'], pesquisador['nome']))
+                  .toList(),
+              onConfirm: (values) {
+                setState(() {
+                  _selectedResearcherIds = values;
+                });
+              },
+              title: Text("Integrantes"),
+              buttonText: Text("Integrantes"),
+              selectedColor: Colors.blue,
+            ),
             const SizedBox(
               height: 30,
             ),
@@ -140,28 +165,6 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              width: 300,
-              child: MultiSelectDialogField(
-                decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade100),
-                searchable: true,
-                items: _pesquisadores
-                    .map((pesquisador) => MultiSelectItem<String>(
-                        pesquisador['nome'], pesquisador['nome']))
-                    .toList(),
-                onConfirm: (values) {
-                  setState(() {
-                    _selectedResearcherIds = values;
-                  });
-                },
-                title: Text("Integrantes"),
-                buttonText: Text("Integrantes"),
-                selectedColor: Colors.blue,
-              ),
             )
           ],
         ),
