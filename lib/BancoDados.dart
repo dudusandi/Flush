@@ -117,4 +117,28 @@ class Banco {
       ''');
     await conn.close();
   }
+
+  Future<List<Map<String, dynamic>>> listarPesquisadores() async {
+    Connection conn = await conectarbanco();
+
+    try {
+      final results = await conn.execute(
+        Sql.named('SELECT * FROM pesquisadores ORDER BY nome'),
+      );
+      List<Map<String, dynamic>> pesquisadores = [];
+
+      for (var row in results) {
+        var pesquisador = {
+          'nome': row[0],
+        };
+        pesquisadores.add(pesquisador);
+      }
+
+      await conn.close();
+      return pesquisadores;
+    } catch (e) {
+      await conn.close();
+      throw e;
+    }
+  }
 }

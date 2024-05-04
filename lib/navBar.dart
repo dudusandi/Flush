@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flush/Ajustes.dart';
 import 'package:flush/BancoDados.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'CadastrarPesquisador.dart';
 import 'CadastrarProjeto.dart';
 import 'Home.dart';
@@ -17,6 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lista de Pesquisadores',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'), // English, UK
+      ],
       initialRoute: '/',
       routes: {
         '/': (context) => Inicio(),
