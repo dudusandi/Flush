@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:imcflutter/CadastrarPesquisador.dart';
-import 'package:imcflutter/DadosPesquisador.dart';
+import 'package:flush/DadosPesquisador.dart';
 import 'package:postgres/postgres.dart';
-import 'package:imcflutter/BancoDados.dart';
+import 'package:flush/BancoDados.dart';
 
 class PesquisadoresListScreen extends StatefulWidget {
   @override
@@ -11,8 +10,6 @@ class PesquisadoresListScreen extends StatefulWidget {
 
 class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   Banco banco = Banco();
-
-
 
   List<Map<String, dynamic>> pesquisadores = [];
 
@@ -66,9 +63,11 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
           ),
           IconButton(
             onPressed: () async {
-              Navigator.pushNamed(context, '/cadastro').then((value) => setState(() {
-                value == true ? atualizarListaPesquisadores() : null;
-              }),);
+              Navigator.pushNamed(context, '/cadastro').then(
+                (value) => setState(() {
+                  value == true ? atualizarListaPesquisadores() : null;
+                }),
+              );
             },
             icon: Icon(Icons.add),
           ),
@@ -86,15 +85,18 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                   subtitle: Text(pesquisadores[index]['areaConhecimento']),
                   onTap: () async {
                     await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DadosPesquisador(),
-                            settings: RouteSettings(
-                                arguments: pesquisadores[index]))).then((value) => setState(() {
-                                  if(value == true) {
-                                    atualizarListaPesquisadores();
-                                  }
-                                }),);
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DadosPesquisador(),
+                                settings: RouteSettings(
+                                    arguments: pesquisadores[index])))
+                        .then(
+                      (value) => setState(() {
+                        if (value == true) {
+                          atualizarListaPesquisadores();
+                        }
+                      }),
+                    );
                   },
                 );
               },

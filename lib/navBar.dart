@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:imcflutter/Ajustes.dart';
-import 'package:imcflutter/BancoDados.dart';
+import 'package:flush/Ajustes.dart';
+import 'package:flush/BancoDados.dart';
 import 'CadastrarPesquisador.dart';
 import 'CadastrarProjeto.dart';
 import 'Home.dart';
@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class Inicio extends StatefulWidget {
   const Inicio({super.key});
@@ -65,14 +64,16 @@ class _InicioState extends State<Inicio> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () async {
-            await Navigator.pushNamed(context, '/ajustes');
-
-          }, icon: const Icon(Icons.settings), color: Colors.white,)
+          IconButton(
+            onPressed: () async {
+              await Navigator.pushNamed(context, '/ajustes');
+            },
+            icon: const Icon(Icons.settings),
+            color: Colors.white,
+          )
         ],
         backgroundColor: const Color(0xff004c9e),
         title: const Text('Flush'),
-
         foregroundColor: Colors.white,
       ),
       body: _pages[_selectedIndex],
@@ -83,7 +84,6 @@ class _InicioState extends State<Inicio> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Início',
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
@@ -98,12 +98,3 @@ class _InicioState extends State<Inicio> {
     );
   }
 }
-
-
-
-
-
-
-
-
-

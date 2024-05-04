@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CadastroProjeto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,11 +7,18 @@ class CadastroProjeto extends StatelessWidget {
       appBar: AppBar(
         title: Text('Cadastrar Projeto'),
       ),
-      body: Center(
-        child: Text(
-          'Formulário de Cadastro de Projeto Aqui',
-          style: TextStyle(fontSize: 24),
-        ),
+      body: const Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(labelText: "Titulo"),
+          ),
+          TextField(
+            decoration: InputDecoration(
+              labelText: "Descrição",
+            ),
+            maxLines: 2,
+          ),
+        ],
       ),
     );
   }

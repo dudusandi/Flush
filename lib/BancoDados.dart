@@ -86,12 +86,12 @@ class Banco {
     Connection conn = await conectarbanco();
 
     await conn.execute('''
-      CREATE TABLE IF NOT EXISTS public.pesquisadores(
-    nome text COLLATE pg_catalog."default" NOT NULL,
-    cpf text COLLATE pg_catalog."default" NOT NULL,
-    tipo text COLLATE pg_catalog."default" NOT NULL,
-    areaconhecimento text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT pesquisadores_pkey PRIMARY KEY (nome)
+    CREATE TABLE IF NOT EXISTS public.pesquisadores (
+    nome TEXT,
+    cpf TEXT,
+    tipo TEXT,
+    areaconhecimento TEXT,
+    CONSTRAINT pesquisadores_pkey PRIMARY KEY (cpf)
 )
      ''');
     await conn.close();
