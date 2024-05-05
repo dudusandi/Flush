@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flush/Ajustes.dart';
+import 'package:flush/ajustes.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import 'BancoDados.dart';
+import 'database.dart';
 
 class CadastroPesquisador extends StatefulWidget {
+  const CadastroPesquisador({super.key});
+
   @override
   _CadastroPesquisadorState createState() => _CadastroPesquisadorState();
 }
@@ -39,7 +41,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: const Color(0xff004c9e),
-          title: Text('Cadastrar Pesquisador'),
+          title: const Text('Cadastrar Pesquisador'),
           foregroundColor: Colors.white,
           actions: [
             IconButton(
@@ -51,19 +53,19 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                     _areaSelecionada,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                         content: Text('Pesquisador cadastrado com sucesso!')),
                   );
                   Navigator.pop(context, true);
                 },
-                icon: Icon(Icons.save))
+                icon: const Icon(Icons.save))
           ]),
       body: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             TextFormField(
               controller: _nomeController,
               keyboardType: TextInputType.text,
@@ -78,7 +80,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'Nome',
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             TextFormField(
               controller: _cpfController,
               keyboardType: TextInputType.number,
@@ -93,7 +95,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'CPF',
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             DropdownButtonFormField<String>(
               value: _tipoSelecionado,
               borderRadius: BorderRadius.circular(20),
@@ -120,7 +122,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                 labelText: 'Cargo',
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             DropdownButtonFormField<String>(
               value: _areaSelecionada,
               borderRadius: BorderRadius.circular(20),
@@ -131,10 +133,47 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
               },
               items: <String>[
                 'Escolha',
-                'Ciência da Computação',
+                'Administração de Empresas',
+                'Arquitetura',
+                'Artes Cênicas',
                 'Astronomia',
+                'Biologia',
+                'Ciência da Computação',
+                'Ciência da Informação',
+                'Ciências Ambientais',
+                'Ciências Políticas',
+                'Comunicação Social',
+                'Design de Interiores',
+                'Design Gráfico',
+                'Direito',
+                'Economia',
+                'Educação Física',
+                'Enfermagem',
+                'Engenharia Ambiental',
+                'Engenharia Biomédica',
+                'Engenharia Civil',
+                'Engenharia de Alimentos',
+                'Engenharia de Software',
+                'Engenharia Elétrica',
+                'Engenharia Mecânica',
+                'Farmácia',
+                'Filosofia',
                 'Física',
-                'Direito'
+                'Geografia',
+                'História',
+                'Jornalismo',
+                'Letras',
+                'Marketing',
+                'Matemática',
+                'Medicina',
+                'Música',
+                'Nutrição',
+                'Odontologia',
+                'Pedagogia',
+                'Psicologia',
+                'Química',
+                'Relações Internacionais',
+                'Turismo',
               ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flush/Ajustes.dart';
-import 'package:flush/BancoDados.dart';
+import 'package:flush/ajustes.dart';
+import 'package:flush/database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'CadastrarPesquisador.dart';
-import 'CadastrarProjeto.dart';
-import 'Home.dart';
-import 'ListarProjetos.dart';
-import 'DadosPesquisador.dart';
-import 'ListarPesquisadores.dart';
+import 'cadastro_pesquisador.dart';
+import 'cadastro_projeto.dart';
+import 'home.dart';
+import 'lista_projeto.dart';
+import 'dados_pesquisador.dart';
+import 'lista_pesquisadores.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,7 +59,7 @@ class _InicioState extends State<Inicio> {
   final List<Widget> _pages = [
     HomePage(),
     PesquisadoresListScreen(),
-    ProjetosListScreen(),
+    ListaProjeto(),
   ];
 
   void _onItemTapped(int index) {

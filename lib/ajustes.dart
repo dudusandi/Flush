@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'BancoDados.dart';
+import 'database.dart';
 import 'navBar.dart';
 
 class Ajustes extends StatefulWidget {
+  const Ajustes({super.key});
+
   @override
   AjustesState createState() => AjustesState();
 }
@@ -17,7 +19,7 @@ class AjustesState extends State<Ajustes> {
       _databaseController.text = prefs.getString('database') ?? '';
       _usuarioController.text = prefs.getString('usuario') ?? '';
       _senhaController.text = prefs.getString('senha') ?? '';
-      _selectedItem = prefs.getString('itemSelecionado') ?? '';
+      _selectedItem = prefs.getString('itemSelecionado') ?? 'ativado';
     });
   }
 
@@ -65,6 +67,8 @@ class AjustesState extends State<Ajustes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff004c9e),
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
               onPressed: () async {
@@ -85,7 +89,7 @@ class AjustesState extends State<Ajustes> {
                 }
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => Inicio()),
+                  MaterialPageRoute(builder: (context) => const Inicio()),
                   (Route<dynamic> route) => false,
                 );
               },
@@ -206,7 +210,7 @@ class AjustesState extends State<Ajustes> {
                   borderRadius: BorderRadius.circular(20),
                   decoration: InputDecoration(
                     labelText: 'SSL',
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: const TextStyle(color: Colors.black),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(20),

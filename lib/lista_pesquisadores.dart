@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flush/DadosPesquisador.dart';
+import 'package:flush/dados_pesquisador.dart';
 import 'package:postgres/postgres.dart';
-import 'package:flush/BancoDados.dart';
+import 'package:flush/database.dart';
 
 class PesquisadoresListScreen extends StatefulWidget {
+  const PesquisadoresListScreen({super.key});
+
   @override
   PesquisadoresListScreenState createState() => PesquisadoresListScreenState();
 }
@@ -53,13 +55,13 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pesquisadores'),
+        title: const Text('Pesquisadores'),
         actions: [
           IconButton(
             onPressed: () {
               atualizarListaPesquisadores();
             },
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
           ),
           IconButton(
             onPressed: () async {
@@ -69,7 +71,7 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                 }),
               );
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -87,7 +89,7 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                     await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DadosPesquisador(),
+                                builder: (context) => const DadosPesquisador(),
                                 settings: RouteSettings(
                                     arguments: pesquisadores[index])))
                         .then(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'BancoDados.dart';
+import 'database.dart';
 
 class DadosPesquisador extends StatefulWidget {
   const DadosPesquisador({super.key});
@@ -46,14 +46,11 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
-
                   ),
                 ),
-
                 Text(
                   data["nome"],
                   style: const TextStyle(
-
                     fontSize: 20,
                   ),
                 ),
