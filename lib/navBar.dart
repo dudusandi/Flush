@@ -14,6 +14,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,10 +45,10 @@ class Inicio extends StatefulWidget {
   const Inicio({super.key});
 
   @override
-  _InicioState createState() => _InicioState();
+  InicioState createState() => InicioState();
 }
 
-class _InicioState extends State<Inicio> {
+class InicioState extends State<Inicio> {
   int _selectedIndex = 0;
 
   Banco banco = Banco();

@@ -5,6 +5,8 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'database.dart';
 
 class CadastroProjeto extends StatefulWidget {
+  const CadastroProjeto({super.key});
+
   @override
   State<CadastroProjeto> createState() => _CadastroProjetoState();
 }
@@ -56,16 +58,13 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
       setState(() {
         _pesquisadores = pesquisadores;
       });
-    } catch (e) {
-      // Trate qualquer erro aqui
-      print('Erro ao carregar pesquisadores: $e');
-    }
+    } catch (e) {}
   }
 
   @override
   void initState() {
     super.initState();
-    _carregarPesquisadores(); // Carregar a lista de pesquisadores ao iniciar o estado
+    _carregarPesquisadores();
   }
 
   @override
