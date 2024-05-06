@@ -1,6 +1,8 @@
 import 'package:postgres/postgres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+String? erro;
+
 class Banco {
   String? host;
   String? database;
@@ -48,16 +50,16 @@ class Banco {
     await conn.execute('''
     CREATE TABLE IF NOT EXISTS public.pesquisadores (
     nome TEXT,
-    cpf TEXT,
+    cpf TEXT PRIMARY KEY,
     tipo TEXT,
     areaconhecimento TEXT,
-    projeto TEXT,
-    CONSTRAINT pesquisadores_pkey PRIMARY KEY (cpf)
+    projeto TEXT
 )
      ''');
 
     await conn.execute('''
     CREATE TABLE IF NOT EXISTS public.pesquisas(
+    id SERIAL PRIMARY KEY,
     titulo TEXT,
     descricao TEXT,
     datainicio DATE,
@@ -73,11 +75,16 @@ class Banco {
       String nome, String cpf, String tipo, String area) async {
     Connection conn = await conectarbanco();
 
-    await conn.execute('''
+    try {
+      await conn.execute('''
       INSERT INTO pesquisadores (nome, cpf, tipo, areaconhecimento) 
       VALUES ('$nome', '$cpf', '$tipo', '$area')
       ''');
-    await conn.close();
+      await conn.close();
+    } catch (e) {
+      erro = e.toString();
+      return;
+    }
   }
 
   Future<void> removerPesquisador(String nome) async {
@@ -117,24 +124,19 @@ class Banco {
   Future<List<Map<String, dynamic>>> listarPesquisadores() async {
     Connection conn = await conectarbanco();
 
-    try {
-      final results = await conn.execute(
-        Sql.named('SELECT * FROM pesquisadores ORDER BY nome'),
-      );
-      List<Map<String, dynamic>> pesquisadores = [];
+    final results = await conn.execute(
+      Sql.named('SELECT * FROM pesquisadores ORDER BY nome'),
+    );
+    List<Map<String, dynamic>> pesquisadores = [];
 
-      for (var row in results) {
-        var pesquisador = {
-          'nome': row[0],
-        };
-        pesquisadores.add(pesquisador);
-      }
-
-      await conn.close();
-      return pesquisadores;
-    } catch (e) {
-      await conn.close();
-      rethrow;
+    for (var row in results) {
+      var pesquisador = {
+        'nome': row[0],
+      };
+      pesquisadores.add(pesquisador);
     }
+
+    await conn.close();
+    return pesquisadores;
   }
 }

@@ -36,15 +36,15 @@ class _ListaProjetoState extends State<ListaProjeto> {
     );
 
     for (var row in results) {
-      var dataInicial = row[2];
-      var dataFinal = row[3];
+      var dataInicial = row[3];
+      var dataFinal = row[4];
 
       var pesquisa = {
-        'titulo': row[0],
-        'descricao': row[1],
+        'titulo': row[1],
+        'descricao': row[2],
         'datainicial': DateFormat('dd/MM/yyyy').format(dataInicial as DateTime),
         'datafinal': DateFormat('dd/MM/yyyy').format(dataFinal as DateTime),
-        'pesquisadores': row[4]
+        'pesquisadores': row[5]
       };
       pesquisas.add(pesquisa);
     }
@@ -59,7 +59,7 @@ class _ListaProjetoState extends State<ListaProjeto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesquisadores'),
+        title: const Text('Projetos'),
         actions: [
           IconButton(
             onPressed: () {

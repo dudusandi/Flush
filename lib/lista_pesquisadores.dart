@@ -66,9 +66,21 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
           IconButton(
             onPressed: () async {
               Navigator.pushNamed(context, '/cadastro').then(
-                (value) => setState(() {
-                  value == true ? atualizarListaPesquisadores() : null;
-                }),
+                (value) => setState(
+                  () {
+                    if (value == true) {
+                      atualizarListaPesquisadores();
+                      print(erro);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text(erro!.isNotEmpty
+                                ? 'Erro ao Cadastrar'
+                                : 'Pesquisador Cadastrado')),
+                      );
+                      erro = '';
+                    }
+                  },
+                ),
               );
             },
             icon: const Icon(Icons.add),

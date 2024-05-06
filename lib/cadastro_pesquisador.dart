@@ -52,10 +52,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                     _tipoSelecionado,
                     _areaSelecionada,
                   );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('Pesquisador cadastrado com sucesso!')),
-                  );
+
                   Navigator.pop(context, true);
                 },
                 icon: const Icon(Icons.save))
