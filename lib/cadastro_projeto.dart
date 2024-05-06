@@ -80,7 +80,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     dataInicial.toString(),
                     dataFinal.toString(),
                     _selectedResearcherIds);
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
               icon: Icon(Icons.save))
         ],
