@@ -1,3 +1,4 @@
+import 'package:flush/dados_projeto.dart';
 import 'package:flutter/material.dart';
 import 'package:flush/ajustes.dart';
 import 'package:flush/database.dart';
@@ -10,7 +11,7 @@ import 'dados_pesquisador.dart';
 import 'lista_pesquisadores.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -30,12 +31,13 @@ class MyApp extends StatelessWidget {
       ],
       initialRoute: '/',
       routes: {
-        '/': (context) => Inicio(),
-        '/detalhes': (context) => DadosPesquisador(),
-        '/cadastro': (context) => CadastroPesquisador(),
-        '/cadastro_projeto': (context) => CadastroProjeto(),
-        '/ajustes': (context) => Ajustes(),
-        '/listapesquisadores': (context) => PesquisadoresListScreen()
+        '/': (context) => const Inicio(),
+        '/detalhes': (context) => const DadosPesquisador(),
+        '/cadastro': (context) => const CadastroPesquisador(),
+        '/cadastro_projeto': (context) => const CadastroProjeto(),
+        '/ajustes': (context) => const Ajustes(),
+        '/listapesquisadores': (context) => const PesquisadoresListScreen(),
+        '/dadosprojeto': (context) => const DadosProjeto()
       },
     );
   }
@@ -59,9 +61,9 @@ class InicioState extends State<Inicio> {
   }
 
   final List<Widget> _pages = [
-    HomePage(),
-    PesquisadoresListScreen(),
-    ListaProjeto(),
+    const HomePage(),
+    const PesquisadoresListScreen(),
+    const ListaProjeto(),
   ];
 
   void _onItemTapped(int index) {

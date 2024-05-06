@@ -25,7 +25,9 @@ class _DadosProjetoState extends State<DadosProjeto> {
           IconButton(
               onPressed: () async {
                 await banco.removerPesquisa(data['titulo']);
-                Navigator.pop(context, true);
+                if (context.mounted) {
+                  Navigator.pop(context, true);
+                }
               },
               icon: const Icon(Icons.delete))
         ],

@@ -18,7 +18,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   final tituloController = TextEditingController();
   final descricaoController = TextEditingController();
 
-  Banco _banco = Banco();
+  Banco banco = Banco();
   List<Map<String, dynamic>> _pesquisadores = [];
   List<String> _selectedResearcherIds = [];
 
@@ -38,7 +38,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
 
   Future<void> _dataFinal(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-      locale: Locale('pt', 'BR'),
+      locale: const Locale('pt', 'BR'),
       context: context,
       initialDate: dataFinal,
       firstDate: DateTime(2000),
@@ -52,13 +52,11 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   }
 
   Future<void> _carregarPesquisadores() async {
-    try {
-      List<Map<String, dynamic>> pesquisadores =
-          await _banco.listarPesquisadores();
-      setState(() {
-        _pesquisadores = pesquisadores;
-      });
-    } catch (e) {}
+    List<Map<String, dynamic>> pesquisadores =
+        await banco.listarPesquisadores();
+    setState(() {
+      _pesquisadores = pesquisadores;
+    });
   }
 
   @override
@@ -74,7 +72,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
         actions: [
           IconButton(
               onPressed: () {
-                _banco.salvarProjeto(
+                banco.salvarProjeto(
                     tituloController.text,
                     descricaoController.text,
                     dataInicial.toString(),
@@ -82,9 +80,9 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     _selectedResearcherIds);
                 Navigator.pop(context, true);
               },
-              icon: Icon(Icons.save))
+              icon: const Icon(Icons.save))
         ],
-        title: Text('Cadastrar Projeto'),
+        title: const Text('Cadastrar Projeto'),
         foregroundColor: Colors.white,
         backgroundColor: const Color(0xff004c9e),
       ),
@@ -124,7 +122,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                 ),
                 maxLines: 2,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               MultiSelectDialogField(

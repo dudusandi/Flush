@@ -1,4 +1,3 @@
-import 'package:flush/dados_projeto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:postgres/postgres.dart';
@@ -90,19 +89,11 @@ class _ListaProjetoState extends State<ListaProjeto> {
                   title: Text(pesquisas[index]['titulo']),
                   subtitle: Text(pesquisas[index]['datainicial']),
                   onTap: () async {
-                    await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DadosProjeto(),
-                                settings:
-                                    RouteSettings(arguments: pesquisas[index])))
-                        .then(
-                      (value) => setState(() {
-                        if (value == true) {
-                          atualizarListaPesquisas();
-                        }
-                      }),
-                    );
+                    await Navigator.pushNamed(context, '/dadosprojeto',
+                            arguments: pesquisas[index])
+                        .then((value) => setState(() {
+                              value == true ? atualizarListaPesquisas() : null;
+                            }));
                   },
                 );
               },

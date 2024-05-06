@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'database.dart';
-import 'navBar.dart';
+import 'navbar.dart';
 
 class Ajustes extends StatefulWidget {
   const Ajustes({super.key});
@@ -87,11 +87,13 @@ class AjustesState extends State<Ajustes> {
                     );
                   });
                 }
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Inicio()),
-                  (Route<dynamic> route) => false,
-                );
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Inicio()),
+                    (Route<dynamic> route) => false,
+                  );
+                }
               },
               icon: const Icon(Icons.save))
         ],

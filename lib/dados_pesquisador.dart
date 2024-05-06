@@ -25,7 +25,9 @@ class _DadosPesquisadorState extends State<DadosPesquisador> {
           IconButton(
               onPressed: () async {
                 await banco.removerPesquisador(data['nome']);
-                Navigator.pop(context, true);
+                if (context.mounted) {
+                  Navigator.pop(context, true);
+                }
               },
               icon: const Icon(Icons.delete))
         ],
