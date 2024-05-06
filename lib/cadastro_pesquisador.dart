@@ -8,12 +8,12 @@ class CadastroPesquisador extends StatefulWidget {
   const CadastroPesquisador({super.key});
 
   @override
-  _CadastroPesquisadorState createState() => _CadastroPesquisadorState();
+  CadastroPesquisadorState createState() => CadastroPesquisadorState();
 }
 
 AjustesState ajustesState = AjustesState();
 
-class _CadastroPesquisadorState extends State<CadastroPesquisador> {
+class CadastroPesquisadorState extends State<CadastroPesquisador> {
   var maskFormatter = MaskTextInputFormatter(mask: '###.###.###-##');
 
   Banco banco = Banco();
@@ -52,7 +52,7 @@ class _CadastroPesquisadorState extends State<CadastroPesquisador> {
                     _tipoSelecionado,
                     _areaSelecionada,
                   );
-
+                  if (!context.mounted) return;
                   Navigator.pop(context, true);
                 },
                 icon: const Icon(Icons.save))

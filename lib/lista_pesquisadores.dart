@@ -70,7 +70,6 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                   () {
                     if (value == true) {
                       atualizarListaPesquisadores();
-                      print(erro);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                             content: Text(erro!.isNotEmpty
