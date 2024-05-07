@@ -1,45 +1,48 @@
+import 'package:flush/controller/ajustes_controller.dart';
 import 'package:postgres/postgres.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-String? erro;
+String? erroAddPesquisador;
+String? erroCriarBanco;
+String? erroConectarBanco;
 
 class Banco {
   String? host;
   String? database;
   String? usuario;
   String? senha;
-  String? selectedItem;
   String? ssl;
   String? port;
   String? portaController;
 
   Future<Connection> conectarbanco() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    host = prefs.getString('host') ?? '';
-    portaController = prefs.getString('porta') ?? '';
-    database = prefs.getString('database') ?? '';
-    usuario = prefs.getString('usuario') ?? '';
-    senha = prefs.getString('senha') ?? '';
-    selectedItem = prefs.getString('itemSelecionado');
-
-    SslMode sslMode() {
-      return selectedItem == 'ativado' ? SslMode.require : SslMode.disable;
-    }
+    AjustesController ajustes = AjustesController();
 
     try {
+      await ajustes.carregarConfiguracoes().then((configs) {
+        host = configs['host'] ?? '';
+        portaController = configs['porta'] ?? '';
+        database = configs['database'] ?? '';
+        usuario = configs['usuario'] ?? '';
+        senha = configs['senha'] ?? '';
+        ssl = configs['ssl'] ?? '';
+      });
+
+      SslMode sslMode() {
+        return ssl == 'ativado' ? SslMode.require : SslMode.disable;
+      }
+
       final conn = await Connection.open(
         Endpoint(
             host: host!,
             database: database!,
             username: usuario,
             password: senha,
-            port: int.parse(portaController!)),
+            port: int.parse(portaController ?? '5432')),
         settings: ConnectionSettings(sslMode: sslMode()),
       );
-
       return conn;
     } catch (e) {
+      erroConectarBanco = (e.toString());
       return Future.error(e);
     }
   }
@@ -48,6 +51,7 @@ class Banco {
     Connection conn = await conectarbanco();
 
     await conn.execute('''
+    
     CREATE TABLE IF NOT EXISTS public.pesquisadores (
     nome TEXT,
     cpf TEXT PRIMARY KEY,
@@ -55,9 +59,11 @@ class Banco {
     areaconhecimento TEXT,
     projeto TEXT
 )
+
      ''');
 
     await conn.execute('''
+    
     CREATE TABLE IF NOT EXISTS public.pesquisas(
     id SERIAL PRIMARY KEY,
     titulo TEXT,
@@ -66,6 +72,7 @@ class Banco {
     datafim DATE,
     pesquisadores TEXT
     )
+    
      ''');
 
     await conn.close();
@@ -77,13 +84,15 @@ class Banco {
 
     try {
       await conn.execute('''
+      
       INSERT INTO pesquisadores (nome, cpf, tipo, areaconhecimento) 
       VALUES ('$nome', '$cpf', '$tipo', '$area')
+      
       ''');
+
       await conn.close();
     } catch (e) {
-      erro = e.toString();
-      return;
+      erroAddPesquisador = e.toString();
     }
   }
 
@@ -111,14 +120,12 @@ class Banco {
       String dataFim, List<String> pesquisadores) async {
     Connection conn = await conectarbanco();
 
-    try {
-      await conn.execute('''
+    await conn.execute('''
       INSERT INTO public.pesquisas (titulo, descricao, datainicio, datafim, pesquisadores)
       VALUES ('$titulo', '$descricao', '$dataInicio', '$dataFim', '$pesquisadores')
     ''');
-    } catch (e) {
-      throw Exception('Erro ao salvar projeto');
-    }
+
+    await conn.close();
   }
 
   Future<List<Map<String, dynamic>>> listarPesquisadores() async {

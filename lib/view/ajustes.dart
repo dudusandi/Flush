@@ -1,6 +1,6 @@
+import 'package:flush/controller/ajustes_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'database.dart';
+import '../data/database.dart';
 import 'navbar.dart';
 
 class Ajustes extends StatefulWidget {
@@ -11,29 +11,11 @@ class Ajustes extends StatefulWidget {
 }
 
 class AjustesState extends State<Ajustes> {
-  Future<void> carregarConfiguracoes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _hostController.text = prefs.getString('host') ?? '';
-      _portaController.text = prefs.getString('porta') ?? '';
-      _databaseController.text = prefs.getString('database') ?? '';
-      _usuarioController.text = prefs.getString('usuario') ?? '';
-      _senhaController.text = prefs.getString('senha') ?? '';
-      _selectedItem = prefs.getString('itemSelecionado') ?? 'ativado';
-    });
-  }
+  Banco banco = Banco();
+  AjustesController controller = AjustesController();
 
-  Future<void> salvarConfiguracoes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('host', _hostController.text);
-    await prefs.setString('porta', _portaController.text);
-    await prefs.setString('database', _databaseController.text);
-    await prefs.setString('usuario', _usuarioController.text);
-    await prefs.setString('senha', _senhaController.text);
-    await prefs.setString('itemSelecionado', _selectedItem);
-  }
-
-  String _selectedItem = "";
+  String? _ssl;
+  bool passwordVisible = true;
 
   final List<DropdownMenuItem<String>> _items = [
     const DropdownMenuItem(
@@ -53,14 +35,29 @@ class AjustesState extends State<Ajustes> {
   final TextEditingController _usuarioController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
 
-  bool passwordVisible = true;
-
-  Banco banco = Banco();
+  Future<void> salvarconfig() async {
+    await controller.salvarConfiguracoes(
+        _hostController.text,
+        _portaController.text,
+        _databaseController.text,
+        _usuarioController.text,
+        _senhaController.text,
+        _ssl ?? 'ativado');
+  }
 
   @override
   void initState() {
     super.initState();
-    carregarConfiguracoes();
+    controller.carregarConfiguracoes().then((configs) {
+      setState(() {
+        _hostController.text = configs['host'] ?? '';
+        _portaController.text = configs['porta'] ?? '';
+        _databaseController.text = configs['database'] ?? '';
+        _usuarioController.text = configs['usuario'] ?? '';
+        _senhaController.text = configs['senha'] ?? '';
+        _ssl = configs['ssl'] ?? '';
+      });
+    });
   }
 
   @override
@@ -71,31 +68,30 @@ class AjustesState extends State<Ajustes> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-              onPressed: () async {
-                await salvarConfiguracoes();
-                try {
-                  await banco.criarbanco();
-                  setState(() {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Conectado ao Banco!")),
-                    );
-                  });
-                } catch (e) {
-                  setState(() {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(e.toString())),
-                    );
-                  });
-                }
-                if (context.mounted) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Inicio()),
-                    (Route<dynamic> route) => false,
-                  );
-                }
-              },
-              icon: const Icon(Icons.save))
+            icon: const Icon(Icons.save),
+            onPressed: () async {
+              try {
+                await salvarconfig();
+                await banco.criarbanco();
+              } catch (e) {
+                setState(() async {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(erroConectarBanco!)));
+                });
+              }
+              if (context.mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Inicio()),
+                  (Route<dynamic> route) => false,
+                );
+                setState(() async {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Conectado com Sucesso")));
+                });
+              }
+            },
+          ),
         ],
         title: const Text('Ajustes'),
       ),
@@ -208,7 +204,7 @@ class AjustesState extends State<Ajustes> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: DropdownButtonFormField<String>(
-                  value: _selectedItem.isEmpty ? 'ativado' : _selectedItem,
+                  value: _ssl ?? 'ativado',
                   borderRadius: BorderRadius.circular(20),
                   decoration: InputDecoration(
                     labelText: 'SSL',
@@ -223,7 +219,7 @@ class AjustesState extends State<Ajustes> {
                   items: _items,
                   onChanged: (String? newValue) {
                     setState(() {
-                      _selectedItem = newValue!;
+                      _ssl = newValue!;
                     });
                   },
                 ),

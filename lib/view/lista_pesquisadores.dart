@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flush/dados_pesquisador.dart';
+import 'package:flush/view/dados_pesquisador.dart';
 import 'package:postgres/postgres.dart';
-import 'package:flush/database.dart';
+import '../data/database.dart';
 
 class PesquisadoresListScreen extends StatefulWidget {
   const PesquisadoresListScreen({super.key});
@@ -72,11 +72,11 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
                       atualizarListaPesquisadores();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text(erro!.isNotEmpty
+                            content: Text(erroAddPesquisador!.isNotEmpty
                                 ? 'Erro ao Cadastrar'
                                 : 'Pesquisador Cadastrado')),
                       );
-                      erro = '';
+                      erroAddPesquisador = '';
                     }
                   },
                 ),

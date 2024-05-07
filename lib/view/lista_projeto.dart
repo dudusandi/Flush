@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:postgres/postgres.dart';
-
-import 'database.dart';
+import '../data/database.dart';
 
 class ListaProjeto extends StatefulWidget {
   const ListaProjeto({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
+import '../data/database.dart';
 
 class DadosProjeto extends StatefulWidget {
   const DadosProjeto({super.key});
