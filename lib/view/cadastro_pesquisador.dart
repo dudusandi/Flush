@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flush/view/ajustes.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import '../data/database.dart';
+import '../data/banco.dart';
 
 class CadastroPesquisador extends StatefulWidget {
   const CadastroPesquisador({super.key});

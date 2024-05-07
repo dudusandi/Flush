@@ -1,6 +1,6 @@
 import 'package:flush/controller/ajustes_controller.dart';
 import 'package:flutter/material.dart';
-import '../data/database.dart';
+import '../data/banco.dart';
 import 'navbar.dart';
 
 class Ajustes extends StatefulWidget {

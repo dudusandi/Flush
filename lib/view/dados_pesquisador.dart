@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/database.dart';
+import '../data/banco.dart';
 
 class DadosPesquisador extends StatefulWidget {
   const DadosPesquisador({super.key});

@@ -1,7 +1,7 @@
 import 'package:flush/view/dados_projeto.dart';
 import 'package:flutter/material.dart';
 import 'package:flush/view/ajustes.dart';
-import '../data/database.dart';
+import '../data/banco.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'cadastro_pesquisador.dart';
 import 'cadastro_projeto.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flush/view/dados_pesquisador.dart';
 import 'package:postgres/postgres.dart';
-import '../data/database.dart';
+import '../data/banco.dart';
 
 class PesquisadoresListScreen extends StatefulWidget {
   const PesquisadoresListScreen({super.key});
