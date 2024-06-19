@@ -16,6 +16,8 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
 
   final tituloController = TextEditingController();
   final descricaoController = TextEditingController();
+  final empresaController = TextEditingController();
+  final valorController = TextEditingController();
 
   Banco banco = Banco();
   List<Map<String, dynamic>> _pesquisadores = [];
@@ -73,7 +75,9 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
               onPressed: () {
                 banco.salvarProjeto(
                     tituloController.text,
+                    empresaController.text,
                     descricaoController.text,
+                    valorController.text,
                     dataInicial.toString(),
                     dataFinal.toString(),
                     _selectedResearcherIds);
@@ -103,6 +107,36 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                   filled: true,
                   fillColor: Colors.grey.shade200,
                   labelText: 'Título',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: empresaController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  labelText: 'Empresa Patrocinadora',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: valorController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  labelText: 'Valor Investido',
                 ),
               ),
               const SizedBox(

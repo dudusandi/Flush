@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flush/view/dados_pesquisador.dart';
 import 'package:postgres/postgres.dart';
 import '../data/banco.dart';
+import 'PesquisadorSearch.dart';
 
 class PesquisadoresListScreen extends StatefulWidget {
   const PesquisadoresListScreen({super.key});
@@ -14,12 +15,21 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
   Banco banco = Banco();
 
   List<Map<String, dynamic>> pesquisadores = [];
+  List<Map<String, dynamic>> pesquisadoresFiltrados = [];
 
   bool _isLoading = true;
+  TextEditingController searchController = TextEditingController();
+  String searchText = "";
 
   @override
   void initState() {
     super.initState();
+    searchController.addListener(() {
+      setState(() {
+        searchText = searchController.text;
+        filtrarPesquisadores();
+      });
+    });
     atualizarListaPesquisadores();
   }
 
@@ -46,9 +56,22 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
     }
 
     await conn.close();
+    filtrarPesquisadores();
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void filtrarPesquisadores() {
+    if (searchText.isEmpty) {
+      pesquisadoresFiltrados = List.from(pesquisadores);
+    } else {
+      pesquisadoresFiltrados = pesquisadores
+          .where((pesquisador) => pesquisador['nome']
+              .toLowerCase()
+              .contains(searchText.toLowerCase()))
+          .toList();
+    }
   }
 
   @override
@@ -83,6 +106,14 @@ class PesquisadoresListScreenState extends State<PesquisadoresListScreen> {
               );
             },
             icon: const Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: PesquisadorSearch(pesquisadoresFiltrados));
+            },
+            icon: const Icon(Icons.search),
           ),
         ],
       ),

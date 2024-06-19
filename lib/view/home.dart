@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             child: Text(
               "Sistema de Pesquisas e Inovação",
             ),
-          )
+          ),
         ],
       ),
     );

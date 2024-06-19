@@ -70,7 +70,9 @@ class Banco {
     descricao TEXT,
     datainicio DATE,
     datafim DATE,
-    pesquisadores TEXT
+    pesquisadores TEXT,
+    empresa TEXT,
+    valor TEXT
     )
     
      ''');
@@ -116,13 +118,19 @@ class Banco {
     await conn.close();
   }
 
-  Future<void> salvarProjeto(String titulo, String descricao, String dataInicio,
-      String dataFim, List<String> pesquisadores) async {
+  Future<void> salvarProjeto(
+      String titulo,
+      String empresa,
+      String descricao,
+      String valor,
+      String dataInicio,
+      String dataFim,
+      List<String> pesquisadores) async {
     Connection conn = await conectarbanco();
 
     await conn.execute('''
-      INSERT INTO public.pesquisas (titulo, descricao, datainicio, datafim, pesquisadores)
-      VALUES ('$titulo', '$descricao', '$dataInicio', '$dataFim', '$pesquisadores')
+      INSERT INTO public.pesquisas (titulo, descricao, datainicio, datafim, pesquisadores,empresa,valor)
+      VALUES ('$titulo', '$descricao', '$dataInicio', '$dataFim', '$pesquisadores','$empresa', '$valor')
     ''');
 
     await conn.close();
