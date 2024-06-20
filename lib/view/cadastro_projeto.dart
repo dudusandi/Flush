@@ -14,6 +14,8 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   DateTime? dataInicial;
   DateTime? dataFinal;
 
+  bool noDataFinal = false;
+
   final tituloController = TextEditingController();
   final descricaoController = TextEditingController();
   final empresaController = TextEditingController();
@@ -26,7 +28,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   Future<void> _dataInicial(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: dataInicial,
+      initialDate: dataInicial ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
@@ -41,7 +43,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
     final DateTime? picked = await showDatePicker(
       locale: const Locale('pt', 'BR'),
       context: context,
-      initialDate: dataFinal,
+      initialDate: dataFinal ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
@@ -54,7 +56,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
 
   Future<void> _carregarPesquisadores() async {
     List<Map<String, dynamic>> pesquisadores =
-        await banco.listarPesquisadores();
+    await banco.listarPesquisadores();
     setState(() {
       _pesquisadores = pesquisadores;
     });
@@ -79,7 +81,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     descricaoController.text,
                     valorController.text,
                     dataInicial.toString(),
-                    dataFinal.toString(),
+                    noDataFinal ? "01/01/3000" : dataFinal.toString(),
                     _selectedResearcherIds);
                 Navigator.pop(context, true);
               },
@@ -169,7 +171,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                 searchable: true,
                 items: _pesquisadores
                     .map((pesquisador) => MultiSelectItem<String>(
-                        pesquisador['nome'], pesquisador['nome']))
+                    pesquisador['nome'], pesquisador['nome']))
                     .toList(),
                 onConfirm: (values) {
                   setState(() {
@@ -195,7 +197,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                         child: Text(
                           dataInicial == null
                               ? 'Data Inicial'
-                              : 'Inicio: ${dataInicial?.day}/${dataInicial?.month}/${dataInicial?.year}',
+                              : 'Início: ${dataInicial?.day}/${dataInicial?.month}/${dataInicial?.year}',
                         ),
                       ),
                     ),
@@ -205,13 +207,30 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     child: SizedBox(
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () => _dataFinal(context),
+                        onPressed: noDataFinal ? null : () => _dataFinal(context),
                         child: Text(dataFinal == null
                             ? 'Data Final'
                             : 'Fim: ${dataFinal?.day}/${dataFinal?.month}/${dataFinal?.year}'),
                       ),
                     ),
                   ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: noDataFinal,
+                    onChanged: (value) {
+                      setState(() {
+                        noDataFinal = value!;
+                        if (noDataFinal) {
+                          dataFinal = null;
+                        }
+                      });
+                    },
+                  ),
+                  const Text('Sem Data Final')
                 ],
               )
             ],

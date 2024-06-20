@@ -72,7 +72,8 @@ class Banco {
     datafim DATE,
     pesquisadores TEXT,
     empresa TEXT,
-    valor TEXT
+    valor TEXT,
+    arquivo TEXT
     )
     
      ''');
@@ -123,9 +124,10 @@ class Banco {
       String empresa,
       String descricao,
       String valor,
-      String dataInicio,
-      String dataFim,
-      List<String> pesquisadores) async {
+      String? dataInicio,
+      String? dataFim,
+      List<String> pesquisadores,
+      ) async {
     Connection conn = await conectarbanco();
 
     await conn.execute('''

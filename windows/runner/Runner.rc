@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "imcflutter" "\0"
+            VALUE "CompanyName", "com.flush" "\0"
+            VALUE "FileDescription", "Flush" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "imcflutter" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "imcflutter.exe" "\0"
-            VALUE "ProductName", "imcflutter" "\0"
+            VALUE "InternalName", "Flush" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.flush. All rights reserved." "\0"
+            VALUE "OriginalFilename", "Flush.exe" "\0"
+            VALUE "ProductName", "Flush" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
