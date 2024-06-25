@@ -73,7 +73,7 @@ class Banco {
     pesquisadores TEXT,
     empresa TEXT,
     valor TEXT,
-    arquivo TEXT
+    referencia TEXT
     )
     
      ''');
@@ -123,6 +123,7 @@ class Banco {
       String titulo,
       String empresa,
       String descricao,
+      String referencia,
       String valor,
       String? dataInicio,
       String? dataFim,
@@ -131,8 +132,8 @@ class Banco {
     Connection conn = await conectarbanco();
 
     await conn.execute('''
-      INSERT INTO public.pesquisas (titulo, descricao, datainicio, datafim, pesquisadores,empresa,valor)
-      VALUES ('$titulo', '$descricao', '$dataInicio', '$dataFim', '$pesquisadores','$empresa', '$valor')
+      INSERT INTO public.pesquisas (titulo, descricao, datainicio, datafim, pesquisadores,empresa,valor, referencia)
+      VALUES ('$titulo', '$descricao', '$dataInicio', '$dataFim', '$pesquisadores','$empresa', '$valor', '$referencia')
     ''');
 
     await conn.close();

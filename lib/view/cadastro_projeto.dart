@@ -20,6 +20,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
   final descricaoController = TextEditingController();
   final empresaController = TextEditingController();
   final valorController = TextEditingController();
+  final referenciaController = TextEditingController();
 
   Banco banco = Banco();
   List<Map<String, dynamic>> _pesquisadores = [];
@@ -79,6 +80,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     tituloController.text,
                     empresaController.text,
                     descricaoController.text,
+                    referenciaController.text,
                     valorController.text,
                     dataInicial.toString(),
                     noDataFinal ? "01/01/3000" : dataFinal.toString(),
@@ -107,7 +109,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade200,
+                  fillColor: Colors.black12,
                   labelText: 'Título',
                 ),
               ),
@@ -122,7 +124,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade200,
+                  fillColor: Colors.black12,
                   labelText: 'Empresa Patrocinadora',
                 ),
               ),
@@ -137,8 +139,24 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade200,
+                  fillColor: Colors.black12,
                   labelText: 'Valor Investido',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: referenciaController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  filled: true,
+                  fillColor: Colors.black12,
+                  labelText: 'Referências',
                 ),
               ),
               const SizedBox(
@@ -152,10 +170,10 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade200,
+                  fillColor: Colors.black12,
                   labelText: 'Descrição',
                 ),
-                maxLines: 2,
+                maxLines: 5,
               ),
               const SizedBox(
                 height: 20,
@@ -167,7 +185,7 @@ class _CadastroProjetoState extends State<CadastroProjeto> {
                 decoration: BoxDecoration(
                     border: null,
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey.shade200),
+                    color: Colors.black12),
                 searchable: true,
                 items: _pesquisadores
                     .map((pesquisador) => MultiSelectItem<String>(

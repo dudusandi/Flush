@@ -84,6 +84,26 @@ class _DadosProjetoState extends State<DadosProjeto> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
+                    'Referências:',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    data["referencia"],
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
                     'DataInicial:',
                     style: TextStyle(
                       fontSize: 15,

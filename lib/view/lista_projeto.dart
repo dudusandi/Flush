@@ -52,7 +52,9 @@ class _ListaProjetoState extends State<ListaProjeto> {
         'descricao': row[2],
         'datainicial': DateFormat('dd/MM/yyyy').format(dataInicial as DateTime),
         'datafinal': DateFormat('dd/MM/yyyy').format(dataFinal as DateTime),
-        'pesquisadores': row[5]
+        'pesquisadores': row[5],
+        'referencia': row[8]
+
       };
       pesquisas.add(pesquisa);
     }
